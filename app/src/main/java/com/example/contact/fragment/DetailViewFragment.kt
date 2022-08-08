@@ -26,15 +26,12 @@ import com.example.contact.model.User
  * Use the [DetailViewFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DetailViewFragment (var context:AppCompatActivity): Fragment() {
+class DetailViewFragment (): Fragment() {
 
     private lateinit var binding : FragmentDetailViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
     }
 
 
@@ -42,17 +39,10 @@ class DetailViewFragment (var context:AppCompatActivity): Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_detail_view, container, false)
-
-//        var bundle = arguments?.getBundle("user")
 
 
-//        val user = arguments?.getBundle( "user")
+
         val user = this.arguments?.getSerializable("user") as User
-//        val userPh = intent.getSerializableExtra("phone")
-//        val id=intent.getIntExtra("id",-1)
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_view,container,false)
 
         binding.apply {
@@ -63,22 +53,12 @@ class DetailViewFragment (var context:AppCompatActivity): Fragment() {
 
         }
         binding.edit.setOnClickListener {
-//            startActivity(
-//                Intent(context, FormActivity::class.java)
-//                    .putExtra("name",user.name.toString())
-//                    .putExtra("age",user.age.toString())
-//                    .putExtra("des",user.des.toString())
-//                    .putExtra("phone",user.phone.toString())
-//                    .putExtra("id",user.id)
-//                    .putExtra("action","Edit")
-//            )
-
-            val formFragment = FormFragment(this.context)
+            val formFragment = FormFragment()
             val bundle = Bundle()
-            bundle.putSerializable("user",user)
             bundle.putString("action","Edit")
+            bundle.putSerializable("user", arrayOf(user.name,user.des,user.age,user.phone,user.id))
             formFragment.arguments = bundle
-            val fm : FragmentManager = ( this.context as AppCompatActivity).supportFragmentManager
+            val fm : FragmentManager = ( context as AppCompatActivity).supportFragmentManager
 
             val ft = fm.beginTransaction();
             ft.replace(R.id.nav_host_fragment_content_main,formFragment)
@@ -88,26 +68,5 @@ class DetailViewFragment (var context:AppCompatActivity): Fragment() {
         return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailViewFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            DetailViewFragment().apply {
-//                arguments = Bundle().apply {
-//                }
-//            }
-//    }
-    }
 
-//     fun onBackPressed(){
-//        super.onBackPressed()
-//    };
 }

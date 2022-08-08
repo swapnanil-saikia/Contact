@@ -1,6 +1,7 @@
 package com.example.contact.fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 //import android.util.Log\
@@ -21,6 +22,8 @@ import com.example.contact.activity.ModelAdapter
 import com.example.contact.activity.NoteClickInterface
 import com.example.contact.databinding.FragmentDashBinding
 import com.example.contact.model.User
+import com.example.contact.retrofit.AppExecutors
+import com.example.contact.retrofit.RemoteDataSource
 import com.example.contact.viewmodel.ModelViewModal
 import java.util.*
 import kotlin.collections.ArrayList
@@ -29,7 +32,7 @@ import kotlin.collections.ArrayList
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 
-class DashFragment(var viewModel: ModelViewModal, var context: DashBoard) : Fragment(), NoteClickInterface,
+class DashFragment(var viewModel: ModelViewModal) : Fragment(), NoteClickInterface,
     OnQueryTextListener {
     // TODO: Rename and change types of parameters
 //    lateinit var viewModal: ModelViewModal
@@ -38,15 +41,10 @@ class DashFragment(var viewModel: ModelViewModal, var context: DashBoard) : Frag
     lateinit var adapter: ModelAdapter
     private lateinit var binding : FragmentDashBinding
 
-
+val executor=AppExecutors()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -55,12 +53,8 @@ class DashFragment(var viewModel: ModelViewModal, var context: DashBoard) : Frag
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_dash, container, false)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dash,container,false)
 
-//        val search = view.findViewById<SearchView>(R.id.search)
-//        val recycle = view.findViewById<RecyclerView>(R.id.recyclecon)
-//        val button = view.findViewById<FloatingActionButton>(R.id.button)
 
         val search = binding.search
         val recycle = binding.recyclecon
@@ -68,13 +62,10 @@ class DashFragment(var viewModel: ModelViewModal, var context: DashBoard) : Frag
 
         search.setOnQueryTextListener(this)
 
-        recycle.setLayoutManager(LinearLayoutManager(this.context))
+        recycle.layoutManager = LinearLayoutManager(this.context)
 
         button.setOnClickListener {
-//            startActivity(Intent(this.context, FormActivity::class.java))
-//            this.finish()
-
-            val formFragment = FormFragment(this.context)
+            val formFragment = FormFragment()
             val bundle = Bundle()
             bundle.putString("action","Add")
             formFragment.arguments = bundle
@@ -86,7 +77,7 @@ class DashFragment(var viewModel: ModelViewModal, var context: DashBoard) : Frag
 
         }
 
-        adapter = ModelAdapter(this.context,this)
+        adapter = ModelAdapter(this)
         recycle.adapter = adapter
 
         this.viewModel.allUser.observe(this, Observer { list ->
@@ -113,6 +104,9 @@ class DashFragment(var viewModel: ModelViewModal, var context: DashBoard) : Frag
         })
 
 
+        val executors = AppExecutors()
+
+        load()
 
         return binding.root
     }
@@ -126,19 +120,6 @@ class DashFragment(var viewModel: ModelViewModal, var context: DashBoard) : Frag
         }
 
         adapter.updateList(filteredList as List<User>)
-//        adapter.notifyDataSetChanged()
-    }
-    companion object {
-        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String)
-//        =
-//            DashFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
     }
 
     override fun onDeleteIconClick(model: User) {
@@ -154,5 +135,14 @@ class DashFragment(var viewModel: ModelViewModal, var context: DashBoard) : Frag
 
     override fun onQueryTextChange(p0: String?): Boolean {
         TODO("Not yet implemented")
+    }
+    fun load(){
+        executor.networkIO().execute {
+//            RemoteDataSourced_.api().getAllUser().observe(viewLifecycleOwner,Observer{
+//                executor.mainThread().execute{
+//
+//                }
+//            })
+        }
     }
 }

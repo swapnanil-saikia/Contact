@@ -34,8 +34,6 @@ class DashBoard : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        binding = DataBindingUtil.setContentView(this,R.layout.activity_dash_board)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dash_board)
 
 
@@ -49,10 +47,6 @@ class DashBoard : AppCompatActivity(){
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
         setSupportActionBar(toolbar)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true);
-//        supportActionBar?.setDisplayShowHomeEnabled(true);
-
-
 
 
         val toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(
@@ -67,14 +61,14 @@ class DashBoard : AppCompatActivity(){
 
         toggle.syncState()
 
-        loadFragment(DashFragment(viewModal, this))
+        loadFragment(DashFragment(viewModal))
 
 //        onBackPressed()
 
         navigationView.setNavigationItemSelectedListener {
             val id = it.itemId
             if (id == R.id.nav_home) {
-                checkAndLoadFragment(DashFragment(viewModal, this))
+                checkAndLoadFragment(DashFragment(viewModal))
             } else if (id == R.id.nav_profile) {
                 checkAndLoadFragment(MyFragment())
             } else {
@@ -87,10 +81,9 @@ class DashBoard : AppCompatActivity(){
 
     }
 
-    override fun onBackPressed():Unit{
+    override fun onBackPressed(){
     if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START)
-            return
     }
         when(supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)){
             is DashFragment -> {
@@ -112,16 +105,7 @@ class DashBoard : AppCompatActivity(){
                 loadFragmentUtil()
             }
         }
-//    else if (supportFragmentManager.backStackEntryCount == 1){
-//        println("iiiiiiiiiiii")
-//        finish();
-//    }
-//    else {
-//        super.onBackPressed();
-//    }
-//
-//       else{
-//
+
 //       }
     }
     private fun checkAndLoadFragment(fragment:Fragment) {
@@ -142,27 +126,15 @@ class DashBoard : AppCompatActivity(){
                 loadFragment(fragment)
             }
         }
-
-//        val backStateName: String = fragment.javaClass.name
-//        val fm: FragmentManager = supportFragmentManager
-//        val fragmentPopped = fm.popBackStackImmediate(backStateName, 0)
-//        if (!fragmentPopped) {
-//            val ft = fm.beginTransaction();
-//            ft.replace(R.id.nav_host_fragment_content_main, fragment)
-//            ft.addToBackStack(backStateName)
-//            ft.commit()
-//        }
-//        else {
-//            println("eeeeeee")
-//        }
     }
     private fun loadFragmentUtil(){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment_content_main, DashFragment(viewModal,this))
+            .replace(R.id.nav_host_fragment_content_main, DashFragment(viewModal))
             .commit()
     }
 
     private fun loadFragment(fragment: Fragment){
+        print("eeeeeeeeeeeeeeeee")
         val backStateName: String = fragment.javaClass.name
         val fm: FragmentManager = supportFragmentManager
         val fragmentPopped = fm.popBackStackImmediate(backStateName, 0)

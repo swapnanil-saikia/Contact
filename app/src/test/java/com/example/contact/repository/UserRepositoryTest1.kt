@@ -64,10 +64,19 @@ class UserRepositoryTest1{
     @Test
     fun loadImage() = runTest{
         user = User("asa", "asas", "Image", "asas", "asas")
-        userRepository.deleteUser(user)
         userRepository.addUser(user)
         var loadImage = userRepository.loadImage(1)
         assertEquals(loadImage, "Image")
+    }
+    @Test
+    fun updateUser() = runTest {
+        user = User("asa", "asas", "Image", "asas", "asas")
+        userRepository.addUser(user)
+        user.name= "aaa"
+        user.id = 1
+       userRepository.updateUser(user)
+        assertEquals(userDaoFake.user.name, "aaa")
+
     }
 }
 

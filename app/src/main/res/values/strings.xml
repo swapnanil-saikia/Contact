@@ -33,5 +33,7 @@
     <string name="open_drawer">Open Navigation</string>
     <string name="update">Update</string>
 
+    <string name="popup">"..."</string>
+
 
 </resources>

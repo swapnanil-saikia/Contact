@@ -16,6 +16,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -30,7 +31,6 @@ import kotlin.collections.ArrayList
 //import kotlinx.android.synthetic.main.info_list_row.view.*
 
 class ModelAdapter(
-    val context: DashBoard,
     val noteClickInterface: NoteClickInterface
 ): RecyclerView.Adapter<ModelAdapter.ViewHolder>() {
 
@@ -107,70 +107,13 @@ class ModelAdapter(
                 popupMenu.show()
             }
 
-//            holder.phone.setImageResource(R.drawable.download2)
-
-//        holder.phone.setOnClickListener{
-//            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+"+userList[position].phone))
-//                startActivity(it.context,intent,null)
-//        }
-//
-//        holder.delete.setOnClickListener{
-//            noteClickInterface.onDeleteIconClick(userList[position])
-//        }
-//        var s:Uri="s".toUri()
-//        val stream = ByteArrayOutputStream()
-//        if (bmp != null) {
-//            bmp.compress(Bitmap.CompressFormat.PNG, 1, stream)
-//            s = MediaStore.Images.Media.getContentUri(bmp.toString())
-////            MediaStore.Images.Media.insertImage(,bmp, "Title", null);
-//            println("kkkkkkkkkkkkkkkkkk"+stream.toByteArray())
-//        }
-//        val b = Bundle()
-//        b.putSerializable("Image", s)
-//        mIntent.putExtras(b)
-//        startActivity(mIntent)
-
-
-//        var myFragment = MyFragment()
-//
-//       val activity =   DashBoard() as AppCompatActivity
-//        val viewPager = findViewById<ViewPager>(R.id.viewPager);
-
-//        holder.itemView.setOnClickListener {
-//
-//            val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
-//            fragmentTransaction.add(R.id.viewPager, myFragment)
-//            fragmentTransaction.addToBackStack(null)
-//            fragmentTransaction.commit()
-//        }
-
-//
-
-//        val f:Fragment = DetailViewFragment()
-//        var fm :FragmentManager =
-//        fm.beginTransaction()
-
-//        (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment_content_main,DetailViewFragment())
 
         holder.itemView.setOnClickListener {
-//            startActivity(  it.context,
-//            Intent(it.context, Details::class.java)
-//                .putExtra("name",userList[position].name)
-//                .putExtra("age",userList[position].age)
-//                .putExtra("des",userList[position].des)
-//                .putExtra("phone",userList[position].phone)
-//                .putExtra("id",userList[position].id)
-//            ,
-//            null
-//        )
-
-//                .beginTransaction().replace(R.id.nav_host_fragment_content_main,DetailViewFragment()).commit()
-
-            val detailViewFragment = DetailViewFragment(this.context)
+            val detailViewFragment = DetailViewFragment()
             val bundle = Bundle()
             bundle.putSerializable("user",userList[position])
             detailViewFragment.arguments = bundle
-            val fm : FragmentManager = ( holder.itemView.context as FragmentActivity).supportFragmentManager
+            val fm : FragmentManager = ( holder.itemView.context as AppCompatActivity).supportFragmentManager
 
             val ft = fm.beginTransaction();
             ft.replace(R.id.nav_host_fragment_content_main,detailViewFragment)

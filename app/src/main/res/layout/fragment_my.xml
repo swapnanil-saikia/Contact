@@ -11,13 +11,13 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="@dimen/fragment_my_margin_top"
+        android:layout_marginRight="@dimen/fragment_my_margin_right"
+        android:layout_marginLeft="@dimen/fragment_my_margin_left"
+        android:layout_marginBottom="@dimen/fragment_my_margin_bottom"
         app:cardBackgroundColor="@color/light_blue_shade"
-        app:cardCornerRadius="20dp"
-        android:elevation="6dp">
+        app:cardCornerRadius="@dimen/fragment_my_cornerradius"
+        android:elevation="@dimen/fragment_my_elevation">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,28 +28,28 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp" />
+                android:textSize="@dimen/fragment_my_name_size" />
             <TextView
                 android:id="@+id/age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="25sp" />
+                android:layout_marginTop="@dimen/fragment_my_age_margin_top"
+                android:textSize="@dimen/fragment_my_name_size" />
             <TextView
                 android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="25sp" />
+                android:layout_marginTop="@dimen/fragment_my_phone_margin_top"
+                android:textSize="@dimen/fragment_my_phone_size" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:elevation="20dp"
-        app:cardCornerRadius="20dp"
+        android:layout_margin="@dimen/fragment_my_des_card_margin"
+        android:elevation="@dimen/fragment_my_des_elevataion"
+        app:cardCornerRadius="@dimen/fragment_my_des_cornerradius"
         app:cardBackgroundColor="@color/light_blue_shade">
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,16 +60,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textSize="25sp"
+                android:layout_margin="@dimen/fragment_my_des_margin"
+                android:textSize="@dimen/fragment_my_des_size"
                 android:text="@string/profile"/>
 
             <TextView
                 android:id="@+id/des"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textSize="25sp" />
+                android:layout_margin="@dimen/fragment_my_des_content_margin"
+                android:textSize="@dimen/fragment_my_des_content_size" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

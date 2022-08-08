@@ -23,7 +23,7 @@ class UserDaoFake :UserDao{
         return observableList
     }
 
-    override fun getImage(id:Int): String {
+    override fun getImage(id: Int?): String {
         if(id==1){
             println("ididididiidiidid"+id)
             return userList.get(0).img.toString()
@@ -47,7 +47,7 @@ class UserDaoFake :UserDao{
     }
 
     override suspend fun updateUser(user: User) {
-        TODO("Not yet implemented")
+       this.user=user
     }
 
 }

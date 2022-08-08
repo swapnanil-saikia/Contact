@@ -11,7 +11,7 @@ import com.example.contact.model.User
     fun getAll():LiveData<List<User>>
 
     @Query("Select img from user where user.id=:id")
-    fun getImage(id:Int):String
+    fun getImage(id:Int?):String
 
    @Query("Select * from user where user.name=:name")
    fun getUserByName(name:String):User

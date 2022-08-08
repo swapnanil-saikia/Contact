@@ -25,10 +25,7 @@ class MyFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
+     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +36,7 @@ class MyFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my,container,false)
 
-//        view.findViewById<TextView>(R.id.age).text = getString(R.string.myage)
-//        view.findViewById<TextView>(R.id.des).text = getString(R.string.myDes)
-//        view.findViewById<TextView>(R.id.phone).text = getString(R.string.myPhon)
+//        view.<TextView>(R.id.phone).text = getString(R.string.myPhon)
 
         binding.apply {
             age.text = getString(R.string.myage)
@@ -54,23 +49,4 @@ class MyFragment : Fragment() {
 
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
-}

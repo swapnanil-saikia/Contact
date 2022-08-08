@@ -21,7 +21,7 @@ class UserRepository(private val userDao: UserDao) {
         userDao.updateUser(user)
     }
 
-    suspend fun loadImage(id:Int):String{
+    suspend fun loadImage(id:Int?):String{
         return userDao.getImage(id)
     }
 
