@@ -1,21 +1,15 @@
 package com.example.contact.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.contact.room.DatabaseHelper
 import com.example.contact.model.User
-import com.example.contact.repository.UserRepoApi
 import com.example.contact.repository.UserRepository
-import com.example.contact.retrofit.Api
-import com.example.contact.retrofit.RetrofitService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.create
 
 class ModelViewModal(application: Application):AndroidViewModel(application) {
     var allUser:LiveData<List<User>>

@@ -60,7 +60,7 @@ class ModelAdapter(
 
         var decodedByte: ByteArray? =null
         var bmp: Bitmap? =null
-        if (userList[position].img!="") {
+        if (userList[position].img!=""  ) {
              decodedByte = Base64.decode(userList[position].img, Base64.DEFAULT)
              bmp = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size)
             holder.imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp!!, 120, 120, false))
@@ -123,7 +123,6 @@ class ModelAdapter(
     }
 
     override fun getItemCount(): Int {
-
         return userList.size
     }
 

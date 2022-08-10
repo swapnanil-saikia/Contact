@@ -166,23 +166,6 @@ class FormFragment() : Fragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        checkCameraPermission()
-    }
-
-//    override fun onSaveInstanceState(outState: Bundle) {}
-
-
-    private fun checkCameraPermission() {
-        if (ContextCompat.checkSelfPermission(this.context as Context, Manifest.permission.CAMERA)
-            != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this.context as Activity,
-                arrayOf(Manifest.permission.CAMERA),
-                100)
-        }
-    }
-
     private fun check():Boolean{
         if(name.text.toString().isEmpty()){
             name.error = "This Field is Required"

@@ -9,7 +9,7 @@ import retrofit2.http.Query
 //import org.mockito.Mock
 interface Api {
 
-        @Mock("picsum_list.json")
+        @Mock("user_list.json")
         @GET("list")
-        fun getAllUser(): LiveData<List<User>>
+        fun getAllUser(): Call<List<User>>
 }

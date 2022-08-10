@@ -1,6 +1,9 @@
 package com.example.contact.activity
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.SyncStateContract
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -21,9 +24,18 @@ import com.example.contact.fragment.AboutFragment
 import com.example.contact.fragment.DashFragment
 import com.example.contact.fragment.FormFragment
 import com.example.contact.fragment.MyFragment
+import com.example.contact.model.User
+import com.example.contact.retrofit.AppExecutors
+import com.example.contact.retrofit.RemoteDataSource
 import com.example.contact.viewmodel.ModelViewModal
 import kotlinx.android.synthetic.main.app_bar_main.view.*
 import kotlinx.android.synthetic.main.drawable.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class DashBoard : AppCompatActivity(){
@@ -31,6 +43,12 @@ class DashBoard : AppCompatActivity(){
     private lateinit var binding : ActivityDashBoardBinding
     private lateinit var viewModal: ModelViewModal
     private lateinit var drawerLayout:DrawerLayout
+    private var loaded=false
+    private val executor= AppExecutors()
+    val remoteDataSource= RemoteDataSource(this)
+    private lateinit var editor : SharedPreferences.Editor
+
+    private lateinit var sharedPreferences:SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +60,14 @@ class DashBoard : AppCompatActivity(){
             ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         ).get(ModelViewModal::class.java)
 
+        sharedPreferences = this.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+        val hasData = sharedPreferences.getBoolean("hasData", false)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            if(!hasData) {
+                load()
+            }
+        }
         drawerLayout = binding.myDrawerLayout
         val navigationView = binding.navigationView
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -92,7 +118,7 @@ class DashBoard : AppCompatActivity(){
             is FormFragment->{
                 AlertDialog.Builder(this)
                     .setTitle("Exit Alert")
-                    .setMessage("Do You Want To Exit Petals App?")
+                    .setMessage("Do You Want To Exit?")
                     .setPositiveButton(android.R.string.ok) { dialog, whichButton ->
                         loadFragmentUtil()
                     }
@@ -134,7 +160,6 @@ class DashBoard : AppCompatActivity(){
     }
 
     private fun loadFragment(fragment: Fragment){
-        print("eeeeeeeeeeeeeeeee")
         val backStateName: String = fragment.javaClass.name
         val fm: FragmentManager = supportFragmentManager
         val fragmentPopped = fm.popBackStackImmediate(backStateName, 0)
@@ -144,8 +169,31 @@ class DashBoard : AppCompatActivity(){
             ft.addToBackStack(backStateName)
             ft.commit()
         }
-        else {
-            println("eeeeeee")
+
+    }
+
+    private fun load(){
+        executor.networkIO().execute {
+            remoteDataSource.api().getAllUser().enqueue(object : Callback<List<User>> {
+                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                    executor.diskIO().execute {
+                       val res = response.body()
+                        res.let { list->
+                            list?.forEach {
+                                viewModal.addUser(it)
+                            }
+                        }
+                        editor = sharedPreferences.edit()
+                        editor.putBoolean("hasData",true)
+                        editor.commit()
+                    }
+                }
+
+                override fun onFailure(call: Call<List<User>>, t: Throwable) {
+
+                }
+            }
+            )
         }
     }
 }
